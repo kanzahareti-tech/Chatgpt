@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe - The Rustic Kitchen</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script>window.SITE_DATA = { recipes: [] };</script>
+  <script type="application/ld+json" id="ld-json"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header" role="banner" aria-label="Site header">
+    <div class="container header-inner" style="display:flex;align-items:center;gap:12px;padding:12px 16px; justify-content:space-between;">
+      <a href="index.html" class="logo">The Rustic Kitchen</a>
+      <nav aria-label="Main navigation"><a href="index.html">Home</a> | <a href="recipes.html">Recipes</a></nav>
+    </div>
+  </header>
+  <main id="content" class="container" style="padding:20px 16px; max-width:1100px;">
+    <section id="recipe-hero" style="position:relative; height:320px; border-radius:12px; overflow:hidden; background:#eee; margin-bottom:20px;">
+      <img id="hero-img" src="images/recipes/creamy-tuscan-garlic-chicken.svg" alt="Recipe hero" style="width:100%; height:100%; object-fit:cover;" />
+    </section>
+    <article>
+      <h1 id="recipe-title" style="font-family:var(--font-heading, 'Playfair Display', serif); font-size:2rem; margin:0 0 8px;">Creamy Tuscan Garlic Chicken</h1>
+      <p id="recipe-desc" style="color:var(--color-dark-gray); margin:0 0 12px;"></p>
+      <div id="recipe-meta" style="display:flex; gap:12px; align-items:center; font-size:.9rem; color:var(--color-dark-gray);">
+        <span id="recipe-time"></span>
+        <span id="recipe-difficulty"></span>
+        <span id="recipe-yield"></span>
+      </div>
+    </article>
+    <section aria-label="Ingredients" style="margin-top:18px;">
+      <h2 style="font-family:var(--font-heading, 'Playfair Display', serif);">Ingredients</h2>
+      <ul id="ingredient-list" style="column-count:2; column-gap:24px; padding-left:20px;">
+      </ul>
+    </section>
+    <section aria-label="Instructions" style="margin-top:18px;">
+      <h2 style="font-family:var(--font-heading, 'Playfair Display', serif);">Instructions</h2>
+      <ol id="instruction-steps" style="padding-left: 22px; line-height:1.75; max-width:760px;">
+      </ol>
+    </section>
+    <section aria-label="Chef tips" style="margin-top:18px;">
+      <h2 style="font-family:var(--font-heading, 'Playfair Display', serif);">Chef's Tips</h2>
+      <ul id="tips-list" style="padding-left:22px;">
+      </ul>
+    </section>
+    <section aria-label="Nutrition" style="margin-top:18px;">
+      <h2 style="font-family:var(--font-heading, 'Playfair Display', serif);">Nutrition</h2>
+      <p id="nutrition" style="color:var(--color-dark-gray);"></p>
+    </section>
+  </main>
+  <script src="js/recipes.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Load dataset and render the selected recipe from URL query param
+    const urlParams = new URLSearchParams(window.location.search);
+    const rc = urlParams.get('recipe') || '';
+    const data = window.SITE_DATA?.recipes || [];
+    const recipe = data.find(r => (r.slug || r.title.toLowerCase().replace(/[^a-z0-9]+/g,'-')) === rc) || data[0];
+    if (recipe) {
+      document.getElementById('hero-img').src = recipe.image || 'images/recipes/' + (recipe.slug || recipe.title.toLowerCase().replace(/[^a-z0-9]+/g,'-')) + '.svg';
+      document.getElementById('recipe-title').textContent = recipe.title;
+      document.getElementById('recipe-desc').textContent = recipe.description;
+      document.getElementById('recipe-time').textContent = 'Time: ' + recipe.time;
+      document.getElementById('recipe-difficulty').textContent = 'Difficulty: ' + recipe.difficulty;
+      document.getElementById('recipe-yield').textContent = 'Servings: ' + (recipe.servings || 4);
+      // ingredients
+      const ing = document.getElementById('ingredient-list');
+      recipe.ingredients.forEach(i => {
+        const li = document.createElement('li');
+        li.textContent = i;
+        ing.appendChild(li);
+      });
+      // steps
+      const steps = document.getElementById('instruction-steps');
+      recipe.steps.forEach((s,idx) => {
+        const li = document.createElement('li');
+        li.textContent = (idx+1) + '. ' + s;
+        steps.appendChild(li);
+      });
+      // tips
+      const tips = document.getElementById('tips-list');
+      recipe.tips.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        tips.appendChild(li);
+      });
+      // nutrition
+      document.getElementById('nutrition').textContent = 'Calories: ' + recipe.nutrition.calories + ' | Protein: ' + recipe.nutrition.protein + 'g | Carbs: ' + recipe.nutrition.carbs + 'g | Fat: ' + recipe.nutrition.fat + 'g';
+    }
+    // JSON-LD for SEO
+    window.addEventListener('load', () => {
+      if (recipe) {
+        const ld = {
+          "@context": "https://schema.org",
+          "@type": "Recipe",
+          "name": recipe.title,
+          "image": recipe.image,
+          "description": recipe.description,
+          "author": { "@type": "Person", "name": recipe.author || 'The Rustic Kitchen' },
+          "prepTime": recipe.time,
+          "recipeIngredient": recipe.ingredients,
+          "recipeInstructions": recipe.steps.map((s, idx) => ({ "@type": "HowToStep", "text": s, "position": idx+1 })),
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": recipe.rating || 4.5, "ratingCount": recipe.ratingCount || 120 },
+          "recipeCategory": recipe.category,
+          "recipeCuisine": recipe.cuisine || 'Global',
+        };
+        document.getElementById('ld-json').textContent = JSON.stringify(ld, null, 2);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+/* Print-friendly styles for recipe cards and layouts */
+@media print {
+  body{ background: #fff; color: #000; }
+  a{ text-decoration: none; color: inherit; }
+  .container{ width: 100%; }
+  .button, .btn{ display: none; }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - The Rustic Kitchen</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header" role="banner" aria-label="Site header">
+    <div class="container header-inner" style="display:flex;align-items:center;gap:12px;padding:12px 16px; justify-content:space-between;">
+      <a href="index.html" class="logo">The Rustic Kitchen</a>
+      <nav aria-label="Main navigation"><a href="index.html">Home</a> • <a href="recipes.html">Recipes</a></nav>
+    </div>
+  </header>
+  <main id="main-content" class="container" style="padding:20px 16px; max-width:1100px;">
+    <h1 style="font-family:var(--font-heading, 'Playfair Display', serif);">Contact</h1>
+    <p style="color:var(--color-dark-gray);">Questions, collaborations, or just want to say hello? Send a message and I’ll get back within 1-2 business days.</p>
+    <form aria-label="Contact form" onsubmit="return false;" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:end;">
+      <input aria-label="Name" placeholder="Your name" style="grid-column:1 / -1; padding:10px; border:1px solid #ddd; border-radius:6px;" />
+      <input aria-label="Email" placeholder="Email" type="email" style="padding:10px; border:1px solid #ddd; border-radius:6px;" />
+      <select aria-label="Reason" style="padding:10px; border:1px solid #ddd; border-radius:6px;">
+        <option>General Inquiry</option>
+        <option>Recipe Question</option>
+        <option>Collaboration</option>
+        <option>Advertising</option>
+        <option>Other</option>
+      </select>
+      <textarea aria-label="Message" placeholder="Your message" rows="6" style="padding:10px; border:1px solid #ddd; border-radius:6px; grid-column:1 / -1;" ></textarea>
+      <button class="btn" type="submit" style="grid-column:1 / -1;">Send Message</button>
+    </form>
+  </main>
+  <footer class="site-footer" style="padding:20px; text-align:center; border-top:1px solid #eee;">
+    © 2026 The Rustic Kitchen
+  </footer>
+</body>
+</html>

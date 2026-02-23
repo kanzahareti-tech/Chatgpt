@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Results - The Rustic Kitchen</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script>window.SITE_DATA = { recipes: [] };</script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header" role="banner" aria-label="Site header">
+    <div class="container header-inner" style="display:flex;gap:12px;padding:12px 16px; justify-content:space-between;">
+      <a href="index.html" class="logo">The Rustic Kitchen</a>
+      <nav aria-label="Main navigation"><a href="index.html">Home</a> • <a href="recipes.html">Recipes</a></nav>
+    </div>
+  </header>
+  <main id="main-content" class="container" style="padding:20px 16px; max-width:1100px;">
+    <h1 style="font-family:var(--font-heading, 'Playfair Display', serif);">Search Results</h1>
+    <p id="results-count" style="color:var(--color-dark-gray);"></p>
+    <section id="results-grid" class="grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px; margin-top:8px;"></section>
+  </main>
+  <script src="js/search.js"></script>
+  <script src="js/recipes.js"></script>
+</body>
+</html>
